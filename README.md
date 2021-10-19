@@ -1,4 +1,4 @@
-**# Agent: Elite**
+# Agent: Elite
 
 A frantic, yet tactical take on the top-down shooter genre. 
 With access to a first-class arsenal of weapons and gadgets, 
