@@ -9,8 +9,6 @@ public class CameraControl : MonoBehaviour
     private Camera camera;
     private bool followPlayer = true;
     
-
-    // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -18,7 +16,6 @@ public class CameraControl : MonoBehaviour
         camera = Camera.main;
     }
 
-    // Update is called once per frame
     void Update()
     {
         //player can freely move camera while holding down right click
@@ -58,7 +55,5 @@ public class CameraControl : MonoBehaviour
         {
             transform.Translate(direction * 2 * Time.deltaTime);
         }
-
-
     }
 }

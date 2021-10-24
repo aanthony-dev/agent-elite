@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
-    private float timer;
+    [SerializeField] private float health = 10.0f;
+    [SerializeField] private float visibleTime = 0.05f; //how long in total enemy will remain visible while no longer in field of vision
 
-    // Start is called before the first frame update
+    private SpriteRenderer spriteRenderer;   
+    private float timer; //how long left for enemy to reamin visible while no longer in field of vision
+    
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (spriteRenderer.enabled)
@@ -27,12 +28,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    //makes this enemy object visible while in player's field of view
+    //makes this enemy visible while in player's field of view
     public void makeVisible()
     {
-        Debug.Log("enemy visible");
         spriteRenderer.enabled = true;
-        timer = 0.05f;
+        timer = visibleTime;
+    }
+
+    //subtracts bullet damage from enemy's health and destroys enemy if out of health.
+    public void hit(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Debug.Log("Enemy Killed");
+            Destroy(gameObject);
+        }
     }
 
 }

@@ -4,23 +4,20 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float moveSpeed = 5.0f; //player movement speed
 
     private bool moving;
     private Vector3 mousePosition;
     private Camera camera;
     private Rigidbody2D body;
 
-    // Start is called before the first frame update
     void Start()
     {
-        moveSpeed = 5.0f;
         moving = false;
         body = GetComponent<Rigidbody2D>();
         camera = Camera.main;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (moving)

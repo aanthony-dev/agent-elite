@@ -6,8 +6,8 @@ public class FieldOfView : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private LayerMask enemyMask;
-    [SerializeField] private float fov;
-    [SerializeField] private float viewDistance;
+    [SerializeField] private float fov = 60.0f;
+    [SerializeField] private float viewDistance = 20.0f;
 
     private GameObject player;
 
@@ -21,7 +21,6 @@ public class FieldOfView : MonoBehaviour
     private Vector3 origin;
     private float startingAngle;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -30,8 +29,6 @@ public class FieldOfView : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
 
         //initialize field of view mesh
-        viewDistance = 20.0f;
-        fov = 60.0f;
         rayCount = 50;
         origin = player.transform.position;
         startingAngle = player.transform.rotation.eulerAngles.z + fov * 0.5f;
@@ -41,7 +38,6 @@ public class FieldOfView : MonoBehaviour
         triangles = new int[rayCount * 3];
     }
 
-    // Update is called once per frame
     void Update()
     {
         //update position and angle of field of view
@@ -65,21 +61,17 @@ public class FieldOfView : MonoBehaviour
             //cast for enemies
             RaycastHit2D enemyRaycast = Physics2D.Raycast(origin, new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad)), viewDistance, enemyMask);
 
-            bool hasLineOfSight; //clarifies if enemy is hit by raycast but is blocked by an obstacle
             if (obstacleRaycast.collider == null)
             {
                 //no hit       
                 vertex = origin + new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad)) * viewDistance;
-                hasLineOfSight = true;
             }
             else
             {
                 //hit object
                 vertex = obstacleRaycast.point;
-                hasLineOfSight = false;
-                
             }
-            if (enemyRaycast.collider != null && hasLineOfSight)
+            if (enemyRaycast.collider != null)
             {
                 Debug.Log(enemyRaycast.collider.gameObject.tag);
                 if (enemyRaycast.collider.gameObject.tag == "Enemy")

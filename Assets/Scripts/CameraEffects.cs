@@ -4,26 +4,24 @@ using UnityEngine;
 
 public class CameraEffects : MonoBehaviour
 {
-    [SerializeField] private float modIncrement;
-    [SerializeField] private float timerVal;
-
     private PlayerMovement playerMovement;
+    private float timerValue;
     private float timer;
+    private float modIncrement;
     private float mod;
-    private float zVal;
-    
-    // Start is called before the first frame update
+    private float tiltValue;
+
     void Start()
     {
-        modIncrement = 0.1f;
-        timerVal = 0.05f;
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-        timer = timerVal;
+
+        timerValue = 0.05f;
+        timer = timerValue;
+        modIncrement = 0.1f;
         mod = modIncrement;
-        zVal = 0.0f;
+        tiltValue = 0.0f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         cameraTilt();
@@ -34,14 +32,14 @@ public class CameraEffects : MonoBehaviour
     {
         if (playerMovement.getMoving())
         {
-            Vector3 rotation = new Vector3(0, 0, zVal);
+            Vector3 rotation = new Vector3(0, 0, tiltValue);
             this.transform.eulerAngles = rotation;
 
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
-                zVal += mod;
-                timer = timerVal;
+                tiltValue += mod;
+                timer = timerValue;
             }
             if (transform.eulerAngles.z > 3.0f && transform.eulerAngles.z < 5.0f)
             {
@@ -54,3 +52,4 @@ public class CameraEffects : MonoBehaviour
         }
     }
 }
+
