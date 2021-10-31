@@ -7,8 +7,13 @@ public class Bullet : MonoBehaviour
     private float lifeSpan; //max time bullet will be in scene for
     private float damage;
 
+    private SpriteRenderer spriteRenderer;
+    [SerializeField] private float visibleTime = 0.05f;
+    private float timer;
+
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         lifeSpan = 3.0f;
     }
 
@@ -31,8 +36,20 @@ public class Bullet : MonoBehaviour
             Enemy enemy = collision.collider.gameObject.GetComponent<Enemy>();
             enemy.hit(damage);
         }
-        Destroy(gameObject);
+        else if (collision.collider.gameObject.tag == "Player")
+        {
+            Player player = collision.collider.gameObject.GetComponent<Player>();
+            player.hit(damage);
+        }
+            Destroy(gameObject);
     }
+
+    public void makeVisible()
+    {
+        spriteRenderer.enabled = true;
+        timer = visibleTime;
+    }
+
 
     //set damage of the bullet
     public void setDamage(float damage)

@@ -6,13 +6,20 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float health = 10.0f;
     [SerializeField] private float visibleTime = 0.05f; //how long in total enemy will remain visible while no longer in field of vision
+    [SerializeField] private Transform firePoint; //where the bullets spawn from
+    [SerializeField] private GameObject bulletPrefab; //select bullet prefab
 
     private SpriteRenderer spriteRenderer;   
     private float timer; //how long left for enemy to reamin visible while no longer in field of vision
-    
+    private bool shooting;
+    private float bulletForce;
+
     void Start()
     {
+        shooting = false;
+        bulletForce = 30.0f;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        StartCoroutine("shootRoutine");
     }
 
     void Update()
@@ -26,6 +33,8 @@ public class Enemy : MonoBehaviour
                 spriteRenderer.enabled = false; //make invisible
             }
         }
+        
+
     }
 
     //makes this enemy visible while in player's field of view
@@ -43,6 +52,26 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Enemy Killed");
             Destroy(gameObject);
+        }
+    }
+
+    private void shoot()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation) as GameObject;
+        bullet.GetComponent<Bullet>().setDamage(10.0f);
+        //Bullet test = bullet.GetComponent<Bullet>();
+        //test.setDamage(10.0f);
+
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        rb.AddForce(firePoint.right * bulletForce, ForceMode2D.Impulse);
+    }
+
+    IEnumerator shootRoutine()
+    {
+        for (; ; )
+        {
+            shoot();
+            yield return new WaitForSeconds(1.0f);
         }
     }
 

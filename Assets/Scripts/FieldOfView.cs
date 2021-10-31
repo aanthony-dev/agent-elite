@@ -6,13 +6,14 @@ public class FieldOfView : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private LayerMask enemyMask;
-    [SerializeField] private float fov = 60.0f;
-    [SerializeField] private float viewDistance = 20.0f;
 
     private GameObject player;
-
+    private Weapon weapon;
+    
     //field of view mesh variables
     private Mesh mesh;
+    private float fov;
+    private float viewDistance;
     private Bounds bounds;
     private Vector3[] vertices;
     private Vector2[] uv;
@@ -24,12 +25,18 @@ public class FieldOfView : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        weapon = player.transform.GetChild(1).gameObject.GetComponent<Weapon>();
+
+        //field of view mesh determined by weapon
+        fov = weapon.getFov();
+        viewDistance = weapon.getViewDistance();
+
         mesh = new Mesh();
         bounds = new Bounds(origin, Vector3.one * 1000.0f);
         GetComponent<MeshFilter>().mesh = mesh;
 
         //initialize field of view mesh
-        rayCount = 50;
+        rayCount = 30;
         origin = player.transform.position;
         startingAngle = player.transform.rotation.eulerAngles.z + fov * 0.5f;
 
@@ -73,12 +80,18 @@ public class FieldOfView : MonoBehaviour
             }
             if (enemyRaycast.collider != null)
             {
-                Debug.Log(enemyRaycast.collider.gameObject.tag);
+                //Debug.Log(enemyRaycast.collider.gameObject.tag);
                 if (enemyRaycast.collider.gameObject.tag == "Enemy")
                 {
                     Enemy enemy = enemyRaycast.collider.gameObject.GetComponent<Enemy>();
                     enemy.makeVisible();
                 }
+                if (enemyRaycast.collider.gameObject.tag == "Bullet")
+                {
+                    Bullet bullet = enemyRaycast.collider.gameObject.GetComponent<Bullet>();
+                    bullet.makeVisible();
+                }
+
             }
 
             vertices[vertexIndex] = vertex;
