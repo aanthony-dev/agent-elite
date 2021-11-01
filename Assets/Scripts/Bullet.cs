@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour
             Player player = collision.collider.gameObject.GetComponent<Player>();
             player.hit(damage);
         }
-            Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     public void makeVisible()

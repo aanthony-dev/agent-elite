@@ -10,11 +10,13 @@ public abstract class Weapon : MonoBehaviour
     protected Transform firePoint;
 
     protected bool canShoot;
+    protected bool reloading;
 
     protected int clipSize;
     protected int currentAmmo;
     protected float reloadTime;
     protected float damage;
+    protected float inaccuracy;
     protected bool automatic;
     protected float fireRate;
 
@@ -30,15 +32,37 @@ public abstract class Weapon : MonoBehaviour
     public abstract void reload();
 
     //get current ammo amount
-    public abstract int getCurrentAmmo();
+    public int getCurrentAmmo()
+    {
+        return currentAmmo;
+    }
 
     //get maximum ammo amount
-    public abstract int getClipSize();
+    public int getClipSize()
+    {
+        return clipSize;
+    }
 
     //get field of view degree range
-    public abstract float getFov();
+    public float getFov()
+    {
+        return fov;
+    }
 
     //get view distance
-    public abstract float getViewDistance();
+    public float getViewDistance()
+    {
+        return viewDistance;
+    }
 
+    //is weapon is full auto
+    public bool isAutomatic()
+    {
+        return automatic;
+    }
+
+    public bool isReloading()
+    {
+        return reloading;
+    }
 }

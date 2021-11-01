@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         //give weapon to player
-        Instantiate(Resources.Load("Rifle") as GameObject, transform.position, transform.rotation).transform.parent = transform;
+        Instantiate(Resources.Load("Pistol") as GameObject, transform.position, transform.rotation).transform.parent = transform;
     }
 
     void Start()
@@ -21,11 +21,31 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //automatic weapon
+        if (weapon.isAutomatic())
+        {
+            if (Input.GetMouseButton(0))
+            {
+                weapon.shoot();
+            }
+        }
+        //semi-auto weapon
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                weapon.shoot();
+            }
+        }
+        
+        //use gadget
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log("Gadget Used");
         }
-        if (Input.GetKeyDown(KeyCode.R))
+
+        //reload
+        if (Input.GetKeyDown(KeyCode.R) && !weapon.isReloading())
         {
             weapon.reload();
             Debug.Log("Reloading");

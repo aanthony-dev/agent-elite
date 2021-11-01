@@ -7,28 +7,24 @@ public class Rifle : Weapon
     void Awake()
     {
         canShoot = true;
+        reloading = false;
+
         clipSize = 25;
         currentAmmo = clipSize;
         reloadTime = 3.0f;
         damage = 5.0f;
-        fov = 50.0f;
-        viewDistance = 20.0f;
+        inaccuracy = 0.05f;
         automatic = true;
         fireRate = 0.1f;
+
+        fov = 50.0f;
+        viewDistance = 20.0f;
     }
 
     void Start()
     {
         firePoint = transform.parent.gameObject.transform.GetChild(0);
         bullet = Resources.Load("bullet") as GameObject;
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButton(0)) //change to GetMouseButton for automatic
-        {
-            shoot();
-        }
     }
 
     public override void shoot()
@@ -47,11 +43,18 @@ public class Rifle : Weapon
     {
         canShoot = false;
 
+        //add weapon innacuracy
+        Vector3 v = firePoint.right;
+        v[0] += Random.Range(-inaccuracy, inaccuracy);
+        v[1] += Random.Range(-inaccuracy, inaccuracy);
+
         GameObject b = Instantiate(bullet, firePoint.position, firePoint.rotation) as GameObject;
         b.GetComponent<Bullet>().setDamage(damage);
 
         Rigidbody2D rb = b.GetComponent<Rigidbody2D>();
-        rb.AddForce(firePoint.right * bulletForce, ForceMode2D.Impulse);
+        rb.AddForce(v.normalized * bulletForce, ForceMode2D.Impulse);
+
+        firePoint.GetComponent<AudioSource>().Play();
 
         currentAmmo -= 1;
         Debug.Log(getCurrentAmmo().ToString() + " / " + getClipSize().ToString());
@@ -79,24 +82,5 @@ public class Rifle : Weapon
         canShoot = true;
 
         Debug.Log("Reloaded: " + getCurrentAmmo().ToString() + " / " + getClipSize().ToString());
-    }
-
-    public override int getCurrentAmmo()
-    {
-        return currentAmmo;
-    }
-    public override int getClipSize()
-    {
-        return clipSize;
-    }
-
-    public override float getFov()
-    {
-        return fov;
-    }
-
-    public override float getViewDistance()
-    {
-        return viewDistance;
     }
 }

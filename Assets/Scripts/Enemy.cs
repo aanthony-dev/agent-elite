@@ -62,6 +62,8 @@ public class Enemy : MonoBehaviour
         //Bullet test = bullet.GetComponent<Bullet>();
         //test.setDamage(10.0f);
 
+        firePoint.GetComponent<AudioSource>().Play();
+
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.right * bulletForce, ForceMode2D.Impulse);
     }
