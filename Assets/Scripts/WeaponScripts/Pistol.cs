@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-    AudioClip reloadSound;
-    AudioClip shootSound;
+    
     void Awake()
     {
         canShoot = true;
@@ -21,6 +20,8 @@ public class Pistol : Weapon
 
         fov = 60.0f;
         viewDistance = 10.0f;
+        shootVolume = 15.0f;
+        reloadVolume = 3.0f;
     }
 
     void Start()
@@ -28,10 +29,12 @@ public class Pistol : Weapon
         firePoint = transform.parent.gameObject.transform.GetChild(0);
         bullet = Resources.Load("bullet") as GameObject;
 
+        //CHANGE THIS LATER
         shootSound = firePoint.GetComponent<AudioSource>().clip;
         reloadSound = Resources.Load("revolver_reload") as AudioClip;
     }
 
+    //shoot the gun
     public override void shoot()
     {
         if (canShoot && currentAmmo > 0)
@@ -44,6 +47,7 @@ public class Pistol : Weapon
         }
     }
 
+    //routine to shoot the gun
     protected IEnumerator shootRoutine()
     {
         canShoot = false;
@@ -64,6 +68,8 @@ public class Pistol : Weapon
         currentAmmo -= 1;
         Debug.Log(getCurrentAmmo().ToString() + " / " + getClipSize().ToString());
 
+        audioRadius(shootVolume); //check if any enemies heard the noise
+
         for (float time = fireRate; time >= 0.0f; time -= Time.deltaTime)
         {
             yield return null;
@@ -71,18 +77,22 @@ public class Pistol : Weapon
         canShoot = true;
     }
 
+    //reload the gun
     public override void reload()
     {
         StartCoroutine("reloadRoutine");
     }
 
+    //routine to reload the gun
     protected IEnumerator reloadRoutine()
     {
-
         firePoint.GetComponent<AudioSource>().clip = reloadSound;
         firePoint.GetComponent<AudioSource>().Play();
         canShoot = false;
         reloading = true;
+
+        audioRadius(reloadVolume); //check if any enemies heard the noise
+
         for (float time = reloadTime; time >= 0.0f; time -= Time.deltaTime)
         {
             yield return null;

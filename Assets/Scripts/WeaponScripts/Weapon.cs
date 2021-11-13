@@ -9,6 +9,9 @@ public abstract class Weapon : MonoBehaviour
     protected GameObject bullet;
     protected Transform firePoint;
 
+    protected AudioClip reloadSound;
+    protected AudioClip shootSound;
+
     protected bool canShoot;
     protected bool reloading;
 
@@ -22,6 +25,8 @@ public abstract class Weapon : MonoBehaviour
 
     protected float fov;
     protected float viewDistance;
+    protected float shootVolume;
+    protected float reloadVolume;
 
     //public Attachment[] attachments; ADD ATTACHMENTS LATER
 
@@ -61,8 +66,38 @@ public abstract class Weapon : MonoBehaviour
         return automatic;
     }
 
+    //get reloading status
     public bool isReloading()
     {
         return reloading;
+    }
+
+    //check for enemies within range to hear the player making noise
+    public void audioRadius(float soundRadius)
+    {
+        //create contact filter to only check for enemies
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.useLayerMask = true;
+        filter.layerMask = LayerMask.GetMask("Enemies");
+
+        //check for enemies within radius
+        Collider2D[] colliders = new Collider2D[20];
+        int enemiesFound = Physics2D.OverlapCircle(transform.position, soundRadius, filter, colliders);
+        Debug.Log(enemiesFound.ToString() + " enemies heard the player's gun:");
+
+        //alert each enemy of player's position
+        foreach (Collider2D c in colliders)
+        {
+            if (!(c is null))
+            {
+                Debug.Log(c);
+                Enemy e = c.gameObject.GetComponent<Enemy>();
+                e.setHeard(true, transform.position);
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 }

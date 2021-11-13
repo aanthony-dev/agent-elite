@@ -12,11 +12,13 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer spriteRenderer;   
     private float timer; //how long left for enemy to reamin visible while no longer in field of vision
     private bool shooting;
+    private bool heardPlayer;
     private float bulletForce;
 
     void Start()
     {
         shooting = false;
+        heardPlayer = false;
         bulletForce = 30.0f;
         spriteRenderer = GetComponent<SpriteRenderer>();
         StartCoroutine("shootRoutine");
@@ -33,8 +35,6 @@ public class Enemy : MonoBehaviour
                 spriteRenderer.enabled = false; //make invisible
             }
         }
-        
-
     }
 
     //makes this enemy visible while in player's field of view
@@ -75,6 +75,12 @@ public class Enemy : MonoBehaviour
             shoot();
             yield return new WaitForSeconds(1.0f);
         }
+    }
+
+    public void setHeard(bool status, Vector2 position)
+    {
+        heardPlayer = status;
+        Debug.Log("I HEARD THE PLAYER AT" + position.ToString());
     }
 
 }

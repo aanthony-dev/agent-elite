@@ -178,6 +178,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  walkMultiplier: 0.5
+  movingVolume: 5
 --- !u!212 &181589402
 SpriteRenderer:
   m_ObjectHideFlags: 0
