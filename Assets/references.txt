@@ -1,0 +1,6 @@
+AUDIO:
+revolver_reload.mp3: https://www.dreamstime.com/revolver-magnum-drum-spin-sound-audio227716003
+gunshot.mp3: https://www.videvo.net/sound-effect/gun-shot-single-shot-in-pe1097906/246309/
+
+AI NAVIGATION:
+NavMeshPlus: https://github.com/h8man/NavMeshPlus

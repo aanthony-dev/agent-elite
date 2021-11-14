@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private Transform player;
     [SerializeField] private float health = 10.0f;
     [SerializeField] private float visibleTime = 0.05f; //how long in total enemy will remain visible while no longer in field of vision
     [SerializeField] private Transform firePoint; //where the bullets spawn from
     [SerializeField] private GameObject bulletPrefab; //select bullet prefab
 
-    private SpriteRenderer spriteRenderer;   
+    private Rigidbody2D body;
+    private SpriteRenderer spriteRenderer;
     private float timer; //how long left for enemy to reamin visible while no longer in field of vision
     private bool shooting;
     private bool heardPlayer;
@@ -21,6 +23,7 @@ public class Enemy : MonoBehaviour
         heardPlayer = false;
         bulletForce = 30.0f;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        body = GetComponent<Rigidbody2D>();
         StartCoroutine("shootRoutine");
     }
 
@@ -35,6 +38,12 @@ public class Enemy : MonoBehaviour
                 spriteRenderer.enabled = false; //make invisible
             }
         }
+
+        Vector3 direction = player.position - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        body.rotation = angle;
+
+
     }
 
     //makes this enemy visible while in player's field of view
