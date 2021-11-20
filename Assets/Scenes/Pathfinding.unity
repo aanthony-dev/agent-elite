@@ -379,71 +379,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &738594250
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1527059839, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1229052522}
-    - target: {fileID: 7441460063986553949, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441460063986553949, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 5.43
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441460063986553949, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 6.93
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441460063986553949, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441460063986553949, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441460063986553949, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441460063986553949, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441460063986553949, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441460063986553949, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441460063986553949, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441460063986553949, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7441460063986553950, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1229052522}
-    - target: {fileID: 7441460063986554017, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
-      propertyPath: m_Name
-      value: Enemy (2)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
 --- !u!1 &982458877
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +452,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1527059839, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1229052522}
+    - target: {fileID: 1527059839, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 1229052522}
@@ -568,6 +507,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1229052522}
+    - target: {fileID: 7441460063986553950, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7441460063986553950, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
+      propertyPath: playerMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 7441460063986554017, guid: a2e2e54d3f0100444afb1c83873b490e, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -588,7 +535,7 @@ GameObject:
   - component: {fileID: 1229052519}
   - component: {fileID: 1229052518}
   - component: {fileID: 1229052517}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
