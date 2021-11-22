@@ -67,7 +67,11 @@ public class Rifle : Weapon
         currentAmmo -= 1;
         Debug.Log(getCurrentAmmo().ToString() + " / " + getClipSize().ToString());
 
-        audioRadius(shootVolume); //check if any enemies heard the noise
+        if (transform.parent.name == "Player") //prevent chain of enemies hearing enemies
+        {
+            audioRadius(shootVolume); //check if any enemies heard the noise
+        }
+        
 
         for (float time = fireRate; time >= 0.0f; time -= Time.deltaTime)
         {
@@ -88,7 +92,10 @@ public class Rifle : Weapon
         canShoot = false;
         reloading = true;
 
-        audioRadius(reloadVolume); //check if any enemies heard the noise
+        if (transform.parent.name == "Player") //prevent chain of enemies hearing enemies
+        {
+            audioRadius(reloadVolume); //check if any enemies heard the noise
+        }
 
         for (float time = reloadTime; time >= 0.0f; time -= Time.deltaTime)
         {

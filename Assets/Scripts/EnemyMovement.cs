@@ -24,19 +24,36 @@ public class EnemyMovement : MonoBehaviour
     void Update()
     {
         //go investigate the noise
-        if (e.getHeard()) 
+        if (e.getHeard() && !e.getCanSeePlayer()) 
         {
-            //agent.SetDestination(target.position);
-            agent.SetDestination(e.getNoiseLocation());
-            Vector3 direction = player.position - transform.position;
+            agent.SetDestination(e.getLastHeardPosition());
+            Vector2 currentPosition = transform.position;
+            Vector3 direction = e.getLastHeardPosition() - currentPosition;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             body.rotation = angle;
+        }
+
+        //moved to last heard location and have not found player
+        if (agent.remainingDistance <= 0.5f && !e.getCanSeePlayer())
+        {
+            e.setHeard(false);
         }
 
         //look at the player
         else if (e.getCanSeePlayer())
         {
+            agent.SetDestination(transform.position);
             Vector3 direction = player.position - transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            body.rotation = angle;
+        }
+
+        //go investigate where player was last seen
+        else if (e.getSawPlayer() && !e.getCanSeePlayer())
+        {
+            agent.SetDestination(e.getLastSeenPosition());
+            Vector2 currentPosition = transform.position;
+            Vector3 direction = e.getLastSeenPosition() - currentPosition;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             body.rotation = angle;
         }

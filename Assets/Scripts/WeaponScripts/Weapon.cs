@@ -60,6 +60,12 @@ public abstract class Weapon : MonoBehaviour
         return viewDistance;
     }
 
+    //get fire rate
+    public float getFireRate()
+    {
+        return fireRate;
+    }
+
     //is weapon is full auto
     public bool isAutomatic()
     {

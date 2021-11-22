@@ -18,7 +18,7 @@ public class Pistol : Weapon
         automatic = false;
         fireRate = 0.2f;
 
-        fov = 60.0f;
+        fov = 90.0f;
         viewDistance = 10.0f;
         shootVolume = 15.0f;
         reloadVolume = 3.0f;
@@ -68,7 +68,10 @@ public class Pistol : Weapon
         currentAmmo -= 1;
         Debug.Log(getCurrentAmmo().ToString() + " / " + getClipSize().ToString());
 
-        audioRadius(shootVolume); //check if any enemies heard the noise
+        if (transform.parent.name == "Player") //prevent chain of enemies hearing enemies
+        {
+            audioRadius(shootVolume); //check if any enemies heard the noise
+        }
 
         for (float time = fireRate; time >= 0.0f; time -= Time.deltaTime)
         {
@@ -91,7 +94,10 @@ public class Pistol : Weapon
         canShoot = false;
         reloading = true;
 
-        audioRadius(reloadVolume); //check if any enemies heard the noise
+        if (transform.parent.name == "Player") //prevent chain of enemies hearing enemies
+        {
+            audioRadius(reloadVolume); //check if any enemies heard the noise
+        }
 
         for (float time = reloadTime; time >= 0.0f; time -= Time.deltaTime)
         {

@@ -6,35 +6,46 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float health = 10.0f;
     [SerializeField] private float visibleTime = 0.05f; //how long in total enemy will remain visible while no longer in field of vision
+    [SerializeField] private float reactionTime = 0.1f; //how long before the enemy will react to the player
     [SerializeField] private Transform firePoint; //where the bullets spawn from
     [SerializeField] private GameObject bulletPrefab; //select bullet prefab
     [SerializeField] private LayerMask layerMask;
 
     private SpriteRenderer spriteRenderer;
-    private float timer; //how long left for enemy to reamin visible while no longer in field of vision
+    private float timer; //how long left for enemy to remain visible while no longer in field of vision
     private bool heardPlayer;
-    private Vector2 noiseLocation; //where the noise came from
+    private Vector2 lastHeardPosition; //where the noise came from
+
+    private bool sawPlayer;
     private bool canSeePlayer;
-    private float bulletForce;
+    private Vector2 lastSeenPosition; //position where this enemy last saw the player
+
+    private Weapon weapon;
 
     private ContactFilter2D filter;
     private float viewDistance = 10.0f; //CHANGE LATER DEPENDING ON WEAPON
     private float fov = 60.0f; //CHANGE LATER DEPENDING ON WEAPON 
 
+    private void Awake()
+    {
+        //give weapon to enemy
+        Instantiate(Resources.Load("Pistol") as GameObject, transform.position, transform.rotation).transform.parent = transform;
+    }
+
     void Start()
     {
-        heardPlayer = false;
-        canSeePlayer = false;
-        bulletForce = 30.0f;
+        weapon = transform.GetChild(1).gameObject.GetComponent<Weapon>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        //StartCoroutine("shootRoutine");
-
-        StartCoroutine("fovCheckRoutine");
 
         filter = new ContactFilter2D();
         filter.useLayerMask = true;
         filter.layerMask = LayerMask.GetMask("Player");
+
+        heardPlayer = false;
+        sawPlayer = false;
+        canSeePlayer = false;
+        
+        StartCoroutine("fovCheckRoutine");
     }
 
     void Update()
@@ -68,36 +79,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    //TEMPORARY TEST SHOOTING METHOD
-    private void shoot()
-    {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation) as GameObject;
-        bullet.GetComponent<Bullet>().setDamage(10.0f);
-        //Bullet test = bullet.GetComponent<Bullet>();
-        //test.setDamage(10.0f);
-
-        firePoint.GetComponent<AudioSource>().Play();
-
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.AddForce(firePoint.right * bulletForce, ForceMode2D.Impulse);
-    }
-
-    //TEMPORARY TEST SHOOTING ROUTINE
-    IEnumerator shootRoutine()
-    {
-        for (; ; )
-        {
-            shoot();
-            yield return new WaitForSeconds(1.0f);
-        }
-    }
-
     //set where this enemy last heard the player
     public void setHeard(bool status, Vector2 position)
     {
         heardPlayer = status;
-        noiseLocation = position;
-        Debug.Log("I HEARD THE PLAYER AT" + noiseLocation.ToString());
+        if (status)
+        {
+            lastHeardPosition = position;
+            Debug.Log("I HEARD THE PLAYER AT" + lastHeardPosition.ToString());
+        }
+    }
+
+    //set whether this enemy has heard the player
+    public void setHeard(bool status)
+    {
+        heardPlayer = status;
     }
 
     //get whether this enemy heard the player or not
@@ -106,10 +102,34 @@ public class Enemy : MonoBehaviour
         return heardPlayer;
     }
 
-    //get the position at which this enemy heard the player
-    public Vector2 getNoiseLocation()
+    //get the position at which this enemy last heard the player
+    public Vector2 getLastHeardPosition()
     {
-        return noiseLocation;
+        return lastHeardPosition;
+    }
+
+    //set whether this enemy has seen the player
+    public void setSawPlayer(bool status)
+    {
+        sawPlayer = status;
+    }
+
+    //get whether this enemy has seen the player before
+    public bool getSawPlayer()
+    {
+        return sawPlayer;
+    }
+
+    //set the position where this enemy last saw the player
+    public void setLastSeenPosition(Vector2 position)
+    {
+        lastSeenPosition = position;
+    }
+
+    //get the position at which this enemy last saw the player
+    public Vector2 getLastSeenPosition()
+    {
+        return lastSeenPosition;
     }
 
     //set whether this enemy can currently see the player
@@ -128,11 +148,6 @@ public class Enemy : MonoBehaviour
     //checks to see if the player is currently in this enemy's field of view.
     private void fovCheck()
     {
-        //create contact filter to only check for enemies
-        ContactFilter2D filter = new ContactFilter2D();
-        filter.useLayerMask = true;
-        filter.layerMask = LayerMask.GetMask("Player");
-
         Collider2D[] results = new Collider2D[1];
         int enemiesFound = Physics2D.OverlapCircle(transform.position, viewDistance, filter, results);
 
@@ -146,11 +161,24 @@ public class Enemy : MonoBehaviour
 
                 if (!Physics2D.Raycast(transform.position, directionToTarget, distanceToTarget, layerMask))
                 {
+                    sawPlayer = true;
                     canSeePlayer = true;
+                    setLastSeenPosition(target.position);
                     Debug.Log("I CAN SEE THE PLAYER");
+
+                    if (weapon.getCurrentAmmo() > 0)
+                    {
+                        StartCoroutine("enemyShootRoutine");
+                    }
+                    else if (weapon.getCurrentAmmo() == 0 && !weapon.isReloading())
+                    {
+                        StopCoroutine("enemyShootRoutine");
+                        weapon.reload();
+                    }
                 }
                 else
                 {
+                    StopCoroutine("enemyShootRoutine");
                     canSeePlayer = false;
                 }
             }
@@ -175,6 +203,19 @@ public class Enemy : MonoBehaviour
         {
             yield return wait;
             fovCheck();
+        }
+    }
+
+    //routine to shoot at the player
+    private IEnumerator enemyShootRoutine()
+    {
+        float delay = weapon.getFireRate();
+        WaitForSeconds wait = new WaitForSeconds(delay);
+
+        while (true)
+        {
+            weapon.shoot();
+            yield return wait;
         }
     }
 }
