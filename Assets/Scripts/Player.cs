@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         //give weapon to player
-        Instantiate(Resources.Load("Pistol") as GameObject, transform.position, transform.rotation).transform.parent = transform;
+        Instantiate(Resources.Load("Rifle") as GameObject, transform.position, transform.rotation).transform.parent = transform;
     }
 
     void Start()
@@ -60,6 +61,9 @@ public class Player : MonoBehaviour
         {
             Debug.Log("You Died");
             Destroy(gameObject);
+            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         }
     }
 }

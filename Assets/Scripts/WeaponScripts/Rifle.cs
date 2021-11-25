@@ -25,6 +25,12 @@ public class Rifle : Weapon
 
     void Start()
     {
+        if (transform.parent.name == "Player")
+        {
+            ammoCount = GameObject.Find("AmmoCount").GetComponent<TMPro.TextMeshProUGUI>();
+            ammoCount.text = getCurrentAmmo().ToString() + " / " + getClipSize().ToString();
+        }
+
         firePoint = transform.parent.gameObject.transform.GetChild(0);
         bullet = Resources.Load("bullet") as GameObject;
 
@@ -36,7 +42,7 @@ public class Rifle : Weapon
     //shoot the gun
     public override void shoot()
     {
-        if (canShoot && currentAmmo > 0)
+        if (canShoot && currentAmmo > 0 && Time.timeScale != 0)
         {
             StartCoroutine("shootRoutine");
         }
@@ -65,10 +71,12 @@ public class Rifle : Weapon
         firePoint.GetComponent<AudioSource>().Play();
 
         currentAmmo -= 1;
-        Debug.Log(getCurrentAmmo().ToString() + " / " + getClipSize().ToString());
+
+        //Debug.Log(getCurrentAmmo().ToString() + " / " + getClipSize().ToString());
 
         if (transform.parent.name == "Player") //prevent chain of enemies hearing enemies
         {
+            ammoCount.text = getCurrentAmmo().ToString() + " / " + getClipSize().ToString();
             audioRadius(shootVolume); //check if any enemies heard the noise
         }
         
@@ -94,6 +102,7 @@ public class Rifle : Weapon
 
         if (transform.parent.name == "Player") //prevent chain of enemies hearing enemies
         {
+            ammoCount.text = "RELOADING";
             audioRadius(reloadVolume); //check if any enemies heard the noise
         }
 
@@ -101,7 +110,12 @@ public class Rifle : Weapon
         {
             yield return null;
         }
+
         currentAmmo = clipSize;
+        if (transform.parent.name == "Player") //prevent chain of enemies hearing enemies
+        {
+            ammoCount.text = getCurrentAmmo().ToString() + " / " + getClipSize().ToString();
+        }
 
         reloading = false;
         canShoot = true;

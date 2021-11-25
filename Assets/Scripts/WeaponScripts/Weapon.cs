@@ -12,6 +12,8 @@ public abstract class Weapon : MonoBehaviour
     protected AudioClip reloadSound;
     protected AudioClip shootSound;
 
+    protected TMPro.TextMeshProUGUI ammoCount;
+
     protected bool canShoot;
     protected bool reloading;
 
@@ -89,7 +91,8 @@ public abstract class Weapon : MonoBehaviour
         //check for enemies within radius
         Collider2D[] colliders = new Collider2D[20];
         int enemiesFound = Physics2D.OverlapCircle(transform.position, soundRadius, filter, colliders);
-        Debug.Log(enemiesFound.ToString() + " enemies heard the player's gun:");
+
+        //Debug.Log(enemiesFound.ToString() + " enemies heard the player's gun:");
 
         //alert each enemy of player's position
         foreach (Collider2D c in colliders)

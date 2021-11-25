@@ -36,7 +36,7 @@ public class FieldOfView : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
 
         //initialize field of view mesh
-        rayCount = 30;
+        rayCount = 40;
         origin = player.transform.position;
         startingAngle = player.transform.rotation.eulerAngles.z + fov * 0.5f;
 

@@ -128,7 +128,8 @@ public class PlayerMovement : MonoBehaviour
         //check for enemies within radius
         Collider2D[] colliders = new Collider2D[20];
         int enemiesFound = Physics2D.OverlapCircle(transform.position, soundRadius, filter, colliders);
-        Debug.Log(enemiesFound.ToString() + " enemies heard the player moving:");
+
+        //Debug.Log(enemiesFound.ToString() + " enemies heard the player moving:");
 
         //alert each enemy of player's position
         foreach (Collider2D c in colliders)

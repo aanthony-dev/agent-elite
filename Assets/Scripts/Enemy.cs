@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float health = 10.0f;
+    [SerializeField] private float health = 1.0f;
     [SerializeField] private float visibleTime = 0.05f; //how long in total enemy will remain visible while no longer in field of vision
-    [SerializeField] private float reactionTime = 0.1f; //how long before the enemy will react to the player
     [SerializeField] private Transform firePoint; //where the bullets spawn from
     [SerializeField] private GameObject bulletPrefab; //select bullet prefab
     [SerializeField] private LayerMask layerMask;
@@ -23,18 +22,15 @@ public class Enemy : MonoBehaviour
     private Weapon weapon;
 
     private ContactFilter2D filter;
-    private float viewDistance = 10.0f; //CHANGE LATER DEPENDING ON WEAPON
-    private float fov = 60.0f; //CHANGE LATER DEPENDING ON WEAPON 
-
-    private void Awake()
-    {
-        //give weapon to enemy
-        Instantiate(Resources.Load("Pistol") as GameObject, transform.position, transform.rotation).transform.parent = transform;
-    }
+    private float viewDistance;
+    private float fov;
 
     void Start()
     {
         weapon = transform.GetChild(1).gameObject.GetComponent<Weapon>();
+        viewDistance = weapon.getViewDistance();
+        fov = weapon.getFov();
+
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         filter = new ContactFilter2D();
@@ -218,5 +214,6 @@ public class Enemy : MonoBehaviour
             yield return wait;
         }
     }
+
 }
 
