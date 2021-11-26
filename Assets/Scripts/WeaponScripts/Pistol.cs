@@ -19,7 +19,7 @@ public class Pistol : Weapon
         fireRate = 0.2f;
 
         fov = 90.0f;
-        viewDistance = 10.0f;
+        viewDistance = 15.0f;
         shootVolume = 15.0f;
         reloadVolume = 3.0f;
     }
@@ -36,8 +36,10 @@ public class Pistol : Weapon
         bullet = Resources.Load("bullet") as GameObject;
 
         //CHANGE THIS LATER
-        shootSound = firePoint.GetComponent<AudioSource>().clip;
+        shootSound = Resources.Load("revolver_shot") as AudioClip;
         reloadSound = Resources.Load("revolver_reload") as AudioClip;
+
+        firePoint.GetComponent<AudioSource>().clip = shootSound;
     }
 
     //shoot the gun

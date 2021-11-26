@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
 
     private SpriteRenderer spriteRenderer;
+    private Rigidbody2D body;
     private float timer; //how long left for enemy to remain visible while no longer in field of vision
     private bool heardPlayer;
     private Vector2 lastHeardPosition; //where the noise came from
@@ -32,6 +33,7 @@ public class Enemy : MonoBehaviour
         fov = weapon.getFov();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+        body = GetComponent<Rigidbody2D>();
 
         filter = new ContactFilter2D();
         filter.useLayerMask = true;

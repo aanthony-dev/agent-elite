@@ -1,6 +1,12 @@
 AUDIO:
 revolver_reload.mp3: https://www.dreamstime.com/revolver-magnum-drum-spin-sound-audio227716003
-gunshot.mp3: https://www.videvo.net/sound-effect/gun-shot-single-shot-in-pe1097906/246309/
+revolver_shot.mp3: https://www.videvo.net/sound-effect/gun-shot-single-shot-in-pe1097906/246309/
+rifle_shot.mp3: https://soundbible.com/987-AK47-Assault-Rifle.html
+rifle_reload.mp3: https://soundbible.com/414-Eject-Clip-And-Re-Load.html + https://soundbible.com/1069-Lock-And-Load.html
+silenced_shot.mp3: https://soundbible.com/930-Gun-Silencer.html
+
+All audio clips have been edited to give a bit crushed effect.
+
 
 AI NAVIGATION:
 NavMeshPlus: https://github.com/h8man/NavMeshPlus

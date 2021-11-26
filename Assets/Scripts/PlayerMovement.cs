@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         {
             walking = true;
             moving = false;
+            transform.GetComponent<AudioSource>().Stop();
             StopCoroutine("moveNoise");
             speed *= walkMultiplier;
         }
@@ -46,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            if (!moving && !walking)
+            if (!moving && !walking && Time.timeScale != 0)
             {
                 moving = true;
                 StartCoroutine("moveNoise");
@@ -55,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.A))
         {
-            if (!moving && !walking)
+            if (!moving && !walking && Time.timeScale != 0)
             {
                 moving = true;
                 StartCoroutine("moveNoise");
@@ -64,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.S))
         {
-            if (!moving && !walking)
+            if (!moving && !walking && Time.timeScale != 0)
             {
                 moving = true;
                 StartCoroutine("moveNoise");
@@ -73,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
-            if (!moving && !walking)
+            if (!moving && !walking && Time.timeScale != 0)
             {
                 moving = true;
                 StartCoroutine("moveNoise");
@@ -83,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         if (!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
         {
             moving = false;
+            transform.GetComponent<AudioSource>().Stop();
             StopCoroutine("moveNoise"); //stop making noise when player stops moving
         }
     }
@@ -109,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
     //routine for making noise when the player is moving
     private IEnumerator moveNoise()
     {
+        transform.GetComponent<AudioSource>().Play();
         //continue checking while the player is still moving
         for (; ; )
         {

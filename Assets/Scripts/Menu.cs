@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
     bool isPaused;
     private GameObject continueButton;
@@ -23,7 +23,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        //reload
+        //open pause menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!isPaused)
@@ -41,6 +41,25 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    //MAIN MENU FUNCTIONS//
+    public void displayLevels()
+    {
+        Debug.Log("LEVELS");
+        SceneManager.LoadScene(2);
+    }
+
+    public void displayHelp()
+    {
+        Debug.Log("HELP");
+    }
+
+    public void quitGame()
+    {
+        Debug.Log("QUIT");
+        Application.Quit();
+    }
+
+    //PAUSE MENU FUNCTIONS//
     private void activateButtons(bool status)
     {
         continueButton.SetActive(status);
@@ -71,5 +90,4 @@ public class PauseMenu : MonoBehaviour
     {
         SceneManager.LoadScene(0); //loads main menu
     }
-    
 }

@@ -11,11 +11,11 @@ public class Rifle : Weapon
 
         clipSize = 25;
         currentAmmo = clipSize;
-        reloadTime = 3.0f;
+        reloadTime = 2.5f;
         damage = 5.0f;
         inaccuracy = 0.05f;
         automatic = true;
-        fireRate = 0.1f;
+        fireRate = 0.15f;
 
         fov = 50.0f;
         viewDistance = 20.0f;
@@ -35,8 +35,11 @@ public class Rifle : Weapon
         bullet = Resources.Load("bullet") as GameObject;
 
         //CHANGE THIS LATER
-        shootSound = firePoint.GetComponent<AudioSource>().clip;
-        reloadSound = Resources.Load("revolver_reload") as AudioClip;
+
+        shootSound = Resources.Load("rifle_shot") as AudioClip;
+        reloadSound = Resources.Load("rifle_reload") as AudioClip;
+
+        firePoint.GetComponent<AudioSource>().clip = shootSound;
     }
 
     //shoot the gun
@@ -97,6 +100,8 @@ public class Rifle : Weapon
     //routine to shoot the gun
     protected IEnumerator reloadRoutine()
     {
+        firePoint.GetComponent<AudioSource>().clip = reloadSound;
+        firePoint.GetComponent<AudioSource>().Play();
         canShoot = false;
         reloading = true;
 
@@ -117,6 +122,7 @@ public class Rifle : Weapon
             ammoCount.text = getCurrentAmmo().ToString() + " / " + getClipSize().ToString();
         }
 
+        firePoint.GetComponent<AudioSource>().clip = shootSound;
         reloading = false;
         canShoot = true;
 
