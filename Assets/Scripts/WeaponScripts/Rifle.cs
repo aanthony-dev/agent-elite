@@ -28,7 +28,7 @@ public class Rifle : Weapon
         if (transform.parent.name == "Player")
         {
             ammoCount = GameObject.Find("AmmoCount").GetComponent<TMPro.TextMeshProUGUI>();
-            ammoCount.text = getCurrentAmmo().ToString() + " / " + getClipSize().ToString();
+            ammoCount.text = getCurrentAmmo().ToString() + " | " + getClipSize().ToString();
         }
 
         firePoint = transform.parent.gameObject.transform.GetChild(0);
@@ -79,7 +79,7 @@ public class Rifle : Weapon
 
         if (transform.parent.name == "Player") //prevent chain of enemies hearing enemies
         {
-            ammoCount.text = getCurrentAmmo().ToString() + " / " + getClipSize().ToString();
+            ammoCount.text = getCurrentAmmo().ToString() + " | " + getClipSize().ToString();
             audioRadius(shootVolume); //check if any enemies heard the noise
         }
         
@@ -107,7 +107,7 @@ public class Rifle : Weapon
 
         if (transform.parent.name == "Player") //prevent chain of enemies hearing enemies
         {
-            ammoCount.text = "RELOADING";
+            ammoCount.text = "Reloading";
             audioRadius(reloadVolume); //check if any enemies heard the noise
         }
 
@@ -119,13 +119,13 @@ public class Rifle : Weapon
         currentAmmo = clipSize;
         if (transform.parent.name == "Player") //prevent chain of enemies hearing enemies
         {
-            ammoCount.text = getCurrentAmmo().ToString() + " / " + getClipSize().ToString();
+            ammoCount.text = getCurrentAmmo().ToString() + " | " + getClipSize().ToString();
         }
 
         firePoint.GetComponent<AudioSource>().clip = shootSound;
         reloading = false;
         canShoot = true;
 
-        Debug.Log("Reloaded: " + getCurrentAmmo().ToString() + " / " + getClipSize().ToString());
+        Debug.Log("Reloaded: " + getCurrentAmmo().ToString() + " | " + getClipSize().ToString());
     }
 }

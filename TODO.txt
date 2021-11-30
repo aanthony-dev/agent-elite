@@ -1,1 +1,7 @@
-- give enemies a reaction time delay so they don't shoot instantly
+- level design
+- level transitions
+- level select ui
+- tutorial level with background story
+- particle system
+- gadget
+- build version + icon

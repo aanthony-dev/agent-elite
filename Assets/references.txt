@@ -7,6 +7,9 @@ silenced_shot.mp3: https://soundbible.com/930-Gun-Silencer.html
 
 All audio clips have been edited to give a bit crushed effect.
 
+FONT:
+Special Agent: https://www.dafont.com/special-agent.font by Iconian Fonts
+
 
 AI NAVIGATION:
 NavMeshPlus: https://github.com/h8man/NavMeshPlus

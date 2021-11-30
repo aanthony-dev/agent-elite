@@ -46,6 +46,7 @@ public class Menu : MonoBehaviour
     {
         Debug.Log("LEVELS");
         SceneManager.LoadScene(2);
+        Time.timeScale = 1;
     }
 
     public void displayHelp()
