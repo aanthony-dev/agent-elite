@@ -30,7 +30,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (e.getHeard())
         {
-            runNoise.volume = 1;
+            StartCoroutine("footstepDelayRoutine");
         }
 
         //go investigate the noise
@@ -38,7 +38,7 @@ public class EnemyMovement : MonoBehaviour
         {
             agent.SetDestination(e.getLastHeardPosition());
             moving = true;
-            StartCoroutine("reaction"); //delay turning reaction toward noise
+            StartCoroutine("reactionRoutine"); //delay turning reaction toward noise
         }
 
         //moved to last heard location and have not found player
@@ -68,19 +68,28 @@ public class EnemyMovement : MonoBehaviour
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             body.rotation = angle;
         }
-        
     }
 
-    //introduces a reaction time delay for the enemy when turning
-    private IEnumerator reaction()
+    //routine to add a delay to the playing of footsteps
+    private IEnumerator footstepDelayRoutine()
     {
+        //reaction time delay
+        for (float time = Random.Range(0.0f, 1.0f); time >= 0.0f; time -= Time.deltaTime)
+        {
+            yield return null;
+        }
+        runNoise.volume = 1;
+    }
 
+
+    //routine to add a reaction time delay for the enemy when turning
+    private IEnumerator reactionRoutine()
+    {
         //reaction time delay
         for (float time = reactionTime; time >= 0.0f; time -= Time.deltaTime)
         {
             yield return null;
         }
-
         //adjust body rotation
         Vector2 currentPosition = transform.position;
         Vector3 direction = e.getLastHeardPosition() - currentPosition;

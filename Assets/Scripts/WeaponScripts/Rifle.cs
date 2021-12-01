@@ -34,8 +34,6 @@ public class Rifle : Weapon
         firePoint = transform.parent.gameObject.transform.GetChild(0);
         bullet = Resources.Load("bullet") as GameObject;
 
-        //CHANGE THIS LATER
-
         shootSound = Resources.Load("rifle_shot") as AudioClip;
         reloadSound = Resources.Load("rifle_reload") as AudioClip;
 
@@ -74,8 +72,6 @@ public class Rifle : Weapon
         firePoint.GetComponent<AudioSource>().Play();
 
         currentAmmo -= 1;
-
-        //Debug.Log(getCurrentAmmo().ToString() + " / " + getClipSize().ToString());
 
         if (transform.parent.name == "Player") //prevent chain of enemies hearing enemies
         {
@@ -125,7 +121,5 @@ public class Rifle : Weapon
         firePoint.GetComponent<AudioSource>().clip = shootSound;
         reloading = false;
         canShoot = true;
-
-        Debug.Log("Reloaded: " + getCurrentAmmo().ToString() + " | " + getClipSize().ToString());
     }
 }

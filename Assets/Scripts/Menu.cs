@@ -13,12 +13,10 @@ public class Menu : MonoBehaviour
     void Start()
     {
         isPaused = false;
-
-        continueButton = GameObject.Find("ContinueLevel");
-        restartButton = GameObject.Find("RestartLevel");
-        exitButton = GameObject.Find("ExitLevel");
-
-        activateButtons(false);
+        if (SceneManager.GetActiveScene().buildIndex > 0)
+        {
+            activateButtons(false);
+        }
     }
 
     void Update()
@@ -42,27 +40,24 @@ public class Menu : MonoBehaviour
     }
 
     //MAIN MENU FUNCTIONS//
-    public void displayLevels()
-    {
-        Debug.Log("LEVELS");
-        SceneManager.LoadScene(2);
-        Time.timeScale = 1;
-    }
-
-    public void displayHelp()
-    {
-        Debug.Log("HELP");
-    }
-
     public void quitGame()
     {
         Debug.Log("QUIT");
         Application.Quit();
     }
 
+    public void loadLevel(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
+
     //PAUSE MENU FUNCTIONS//
     private void activateButtons(bool status)
     {
+        continueButton = GameObject.Find("ContinueLevel");
+        restartButton = GameObject.Find("RestartLevel");
+        exitButton = GameObject.Find("ExitLevel");
+
         continueButton.SetActive(status);
         restartButton.SetActive(status);
         exitButton.SetActive(status);

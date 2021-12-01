@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform firePoint; //where the bullets spawn from
     [SerializeField] private GameObject bulletPrefab; //select bullet prefab
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private ParticleSystem deathExplosion;
 
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D body;
@@ -72,7 +73,9 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
-            Debug.Log("Enemy Killed");
+            Vector3 test = transform.position;
+            ParticleSystem explosion = Instantiate(deathExplosion, test, Quaternion.identity);
+            Destroy(explosion, 1.0f);
             Destroy(gameObject);
         }
     }
@@ -84,7 +87,6 @@ public class Enemy : MonoBehaviour
         if (status)
         {
             lastHeardPosition = position;
-            Debug.Log("I HEARD THE PLAYER AT" + lastHeardPosition.ToString());
         }
     }
 
@@ -134,7 +136,6 @@ public class Enemy : MonoBehaviour
     public void setCanSeePlayer(bool status, Vector2 position)
     {
         canSeePlayer = status;
-        Debug.Log("I SEE THE PLAYER AT" + position.ToString());
     }
 
     //get whether this enemy can currently see the player
@@ -162,7 +163,6 @@ public class Enemy : MonoBehaviour
                     sawPlayer = true;
                     canSeePlayer = true;
                     setLastSeenPosition(target.position);
-                    Debug.Log("I CAN SEE THE PLAYER");
 
                     if (weapon.getCurrentAmmo() > 0)
                     {

@@ -1,7 +1,3 @@
 - level design
-- level transitions
-- level select ui
 - tutorial level with background story
-- particle system
 - gadget
-- build version + icon

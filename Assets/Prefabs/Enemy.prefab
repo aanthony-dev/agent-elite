@@ -274,6 +274,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  deathExplosion: {fileID: 8172379775097051630, guid: adfcb2b1d77f03f4da1ebf88dca02d45, type: 3}
 --- !u!114 &1527059839
 MonoBehaviour:
   m_ObjectHideFlags: 0

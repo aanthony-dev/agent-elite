@@ -99,7 +99,6 @@ public abstract class Weapon : MonoBehaviour
         {
             if (!(c is null))
             {
-                Debug.Log(c);
                 Enemy e = c.gameObject.GetComponent<Enemy>();
                 e.setHeard(true, transform.position);
             }
