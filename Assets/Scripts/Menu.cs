@@ -12,6 +12,10 @@ public class Menu : MonoBehaviour
 
     void Start()
     {
+        continueButton = GameObject.Find("ContinueLevel");
+        restartButton = GameObject.Find("RestartLevel");
+        exitButton = GameObject.Find("ExitLevel");
+
         isPaused = false;
         if (SceneManager.GetActiveScene().buildIndex > 0)
         {
@@ -54,9 +58,7 @@ public class Menu : MonoBehaviour
     //PAUSE MENU FUNCTIONS//
     private void activateButtons(bool status)
     {
-        continueButton = GameObject.Find("ContinueLevel");
-        restartButton = GameObject.Find("RestartLevel");
-        exitButton = GameObject.Find("ExitLevel");
+        
 
         continueButton.SetActive(status);
         restartButton.SetActive(status);
