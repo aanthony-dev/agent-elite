@@ -19,7 +19,7 @@ public class Rifle : Weapon
 
         fov = 50.0f;
         viewDistance = 20.0f;
-        shootVolume = 25.0f;
+        shootVolume = 20.0f;
         reloadVolume = 3.0f;
     }
 

@@ -1,3 +1,1 @@
-- level design
 - tutorial level with background story
-- gadget

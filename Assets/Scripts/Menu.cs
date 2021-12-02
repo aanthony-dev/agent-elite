@@ -58,8 +58,6 @@ public class Menu : MonoBehaviour
     //PAUSE MENU FUNCTIONS//
     private void activateButtons(bool status)
     {
-        
-
         continueButton.SetActive(status);
         restartButton.SetActive(status);
         exitButton.SetActive(status);

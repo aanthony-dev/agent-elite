@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         //give weapon to player
-        Instantiate(Resources.Load("Rifle") as GameObject, transform.position, transform.rotation).transform.parent = transform;
+        //Instantiate(Resources.Load("Rifle") as GameObject, transform.position, transform.rotation).transform.parent = transform;
     }
 
     void Start()
