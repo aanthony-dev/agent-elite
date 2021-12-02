@@ -6,22 +6,34 @@ using UnityEngine.SceneManagement;
 
 public class LevelLogic : MonoBehaviour
 {
+    private bool levelComplete;
     private GameObject missionComplete;
     private GameObject pressSpace;
-    private bool levelComplete;
+    private GameObject missionBriefing;
+    private GameObject description;
+
 
     void Start()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 0;
     }
 
     private void Awake()
     {
         levelComplete = false;
+
         missionComplete = GameObject.Find("MissionComplete");
         missionComplete.SetActive(false);
         pressSpace = GameObject.Find("PressSpace");
-        pressSpace.SetActive(false);
+        pressSpace.SetActive(true);
+
+        missionBriefing = GameObject.Find("MissionBriefing");
+        missionBriefing.SetActive(true);
+        description = GameObject.Find("Description");
+        description.SetActive(true);
+
+        var fade = GameObject.Find("Fade").GetComponent<Image>();
+        fade.color = new Color(0, 0, 0, 0.9f);
 
         StartCoroutine("enemyCountRoutine");
     }
@@ -40,6 +52,19 @@ public class LevelLogic : MonoBehaviour
                 {
                     SceneManager.LoadScene(0); //completed last level, go back to main menu
                 }
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                missionBriefing.SetActive(false);
+                description.SetActive(false);
+                pressSpace.SetActive(false);
+                var fade = GameObject.Find("Fade").GetComponent<Image>();
+                fade.color = new Color(0, 0, 0, 0);
+
+                Time.timeScale = 1;
             }
         }
     }

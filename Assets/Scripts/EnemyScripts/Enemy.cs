@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private ParticleSystem deathExplosion;
 
+    private SpriteRenderer directionIndicator;
+
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D body;
     private float timer; //how long left for enemy to remain visible while no longer in field of vision
@@ -30,6 +32,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         weapon = transform.GetChild(1).gameObject.GetComponent<Weapon>();
+        directionIndicator = transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>();
         viewDistance = weapon.getViewDistance();
         fov = weapon.getFov();
 
@@ -55,6 +58,7 @@ public class Enemy : MonoBehaviour
             //if enemy is not in field of view
             if (timer <= 0)
             {
+                directionIndicator.enabled = false;
                 spriteRenderer.enabled = false; //make invisible
             }
         }
@@ -63,6 +67,7 @@ public class Enemy : MonoBehaviour
     //makes this enemy visible while in player's field of view
     public void makeVisible()
     {
+        directionIndicator.enabled = true;
         spriteRenderer.enabled = true;
         timer = visibleTime;
     }
